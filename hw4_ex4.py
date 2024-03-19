@@ -33,6 +33,20 @@ def show_contact(args, contacts):
         raise KeyError("Contact not found.")  #перевіряємо наявність контакту для відображення
     return contacts[name]
 
+def show_phone(args, contacts):
+    if len(args) != 1:
+        raise ValueError("Invalid number of arguments.")
+    name = args[0]
+    if name not in contacts:
+        raise KeyError("Contact not found.")
+    return f"Phone number for {name}: {contacts[name]}"
+
+def show_all_contacts(contacts):
+    if not contacts:
+        return "No contacts available."
+    all_contacts = "\n".join([f"{name}: {phone}" for name, phone in contacts.items()])
+    return all_contacts
+
 def main():
     contacts = {}
     print("Welcome to the assistant bot!")
@@ -56,6 +70,12 @@ def main():
 
             elif command == "show":
                 print(show_contact(args, contacts))
+                
+            elif command == "phone":  # обробка команди "phone"
+                print(show_phone(args, contacts))
+
+            elif command == "all":  #обробка команди "all"
+                print(show_all_contacts(contacts))            
 
             else:
                 print("Invalid command.")
@@ -64,4 +84,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
